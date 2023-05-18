@@ -1,0 +1,38 @@
+{% extends 'authentication/auth-base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="container col-md-4 mt-5 justify-content-center">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-success text-center mb-4">ECISSS</h2>
+            <div class="d-flex justify-content-center">
+                <img src="{% static 'images/taifa.jpeg' %}" class="brd">
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group mt-4">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Username" type="text" name="username" id="username">
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <input type="submit" value="Sign in" onclick="validate()" class="btn btn-success btn-block">
+                </div>
+                <a href="#"><h6 class="text-success mt-4" id="fid">Forget password?</h6></a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

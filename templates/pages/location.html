@@ -1,0 +1,89 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+<div class="card card-body">
+    <div class="mb-3">
+       <button class="btn btn-sm btn-success text-light" data-toggle="modal" data-target="#add_region">Add Region</button>
+    </div>
+    <table class="table" id="datatable">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Name</th>
+                <th>District</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for region in regions %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{region.name}}</td>
+                    <td>
+                        <span type="button" class="badge badge-success" data-target="#districts{{region.id}}" data-toggle="modal" >
+                            {{region.num_districts}}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add_district{{region.id}}">
+                            Add district</button>
+                    </td>
+                </tr>
+                <div class="modal fade" id="add_district{{region.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg text-light">{{region.name}} Region Districts</div>
+                            <div class="modal-body">
+                                <form action="{% url 'save_district' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{region.id}}" name="region_id" hidden readonly>
+                                    <div class="form-group mb-3">
+                                        <input name="name" type="text" placeholder="District name" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn bg text-light ">Save District</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="districts{{region.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-dark text-light">{{region.name}} Region Districts</div>
+                            <div class="modal-body">
+                                <ul class="list-style-type">
+                                    {% for district in districts %}
+                                        {% if district.region.id == region.id %}
+                                            <li>{{district.name}}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="add_region">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light">{{region.name}} Region Districts</div>
+            <div class="modal-body">
+                <form action="{% url 'save_region' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <input name="name" type="text" placeholder="Region name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn bg text-light ">Save Region</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

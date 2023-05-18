@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ECISSS</title>
+    <link rel="icon" href="{% static 'images/download.jpg' %}" type="image/png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+     <!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap4.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- jQuery library -->
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-left" href="{% url 'dashboard' %}">
+                <div class="sidebar-brand-text mx-3">ECISSS <br></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users"
+                    aria-expanded="true" aria-controls="users">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span> User Management</span>
+                </a>
+                <div id="users" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-gradient py-2 collapse-inner rounded">
+                        <a class="collapse-item text-light" href="{% url 'user_list' %}">
+                            <i class="fas fa-users-cog"></i> Registered User
+                        </a>
+                        <a class="collapse-item text-light" href="{% url 'staff_list' %}">
+                            <i class="fa fa-users"></i> Registered Staff
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#academic"
+                    aria-expanded="true" aria-controls="users">
+                    <i class="fas fa-fw fa-book-open"></i>
+                    <span> Academic Management</span>
+                </a>
+                <div id="academic" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-gradient py-2 collapse-inner rounded">
+                        <a class="collapse-item text-light" href="{% url 'subject_list' %}">
+                            <i class="fa fa-book"></i> Subjects
+                        </a>
+                        <a class="collapse-item text-light" href="{% url 'term_list' %}">
+                            <i class="fa fa-cogs"></i> Terms
+                        </a>
+                        <a class="collapse-item text-light" href="{% url 'level_list' %}">
+                            <i class="fa fa-level-up"></i> Levels
+                        </a>
+                        <a class="collapse-item text-light" href="{% url 'topic_list' %}">
+                            <i class="fas fa-book-reader"></i> Topics
+                        </a>
+                        <a class="collapse-item text-light" href="{% url 'academic_year_list' %}">
+                            <i class="fas fa-calendar-week"></i> Academic Year
+                        </a>
+                        <a class="collapse-item text-light" href="{% url 'academic_term_list' %}">
+                            <i class="fas fa-calendar-day"></i> Academic Term
+                        </a>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#teaching"
+                    aria-expanded="true" aria-controls="users">
+                    <i class="fas fa-fw fa-pen-square"></i>
+                    <span> Teaching Management</span>
+                </a>
+                <div id="teaching" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-gradient py-2 collapse-inner rounded">
+                        <a class="collapse-item text-light" href="{% url 'teaching_calendar_list' %}">
+                            <i class="fa fa-calendar"></i> Teaching calendar
+                        </a>
+                        <a class="collapse-item text-light" href="">
+                            <i class="fa fa-cogs"></i> Workload
+                        </a>
+                        <a class="collapse-item text-light" href="">
+                            <i class="fa fa-file-pdf"></i> Teaching Report
+                        </a>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'location' %}" >
+                    <i class="fas fa-fw fa-map-marked"></i>
+                    <span> Region and Districts</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'user_logout' %}">
+                    <i class="fa fa-fw fa-sign-out "></i>
+                    <span> Logout </span>
+                </a>
+            </li>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+
+                                </span>
+                                {% if request.user.sex == 'M' %}
+                                    <img class="img-profile rounded-circle" src="{% static 'avator/man.jfif' %}">
+                                {% elif request.user.sex == 'F' %}
+                                    <img class="img-profile rounded-circle" src="{% static 'avator/woman.png' %}">
+                                {% endif %}
+                            </a>
+                            <!-- Dropdown - User Information -->
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="main_container ">
+                        {% include 'includes/messages.html' %}
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span> &copy; ECISSS  </span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/kvm.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-responsive@2.4.1/js/dataTables.responsive.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $('.django-select2 ').select2({
+            width: '100%'
+        });
+
+        // add the 'form-control' class to the select2 input field
+        //  $('.select2-selection').addClass('form-control form-control-2');
+    });
+
+
+
+    new DataTable('#datatable', {
+        responsive: true
+    });
+    new DataTable('#datatable1', {
+        responsive: true
+    });
+    new DataTable('#datatable2', {
+        responsive: true
+    });
+</script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        let alert =  $('.alert')
+        alert.hide();
+        alert.fadeTo(5000, 1000).slideUp(1000, function() {
+            $(".alert").slideUp(1000);
+        });
+    });
+    </script>
+
+</body>
+
+</html>

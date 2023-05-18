@@ -1,0 +1,83 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card card-body">
+                <h4 class="text-center">User Detail</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Full Name</th>
+                        <td>{{profile.first_name}} {{profile.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Sex</th>
+                        <td>{{profile.sex}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{profile.phone}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{profile.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td>{{profile.username}}</td>
+                    </tr>
+                    <tr>
+                        <th>Is active</th>
+                        <td>
+                            {% if user.is_staff %}
+                               <i class="fa fa-check-circle text-success"></i>
+                            {% else %}
+                               <i class="fa fa-times-circle text-danger"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Is Staff</th>
+                        <td>
+                            {% if user.is_staff %}
+                                <i class="fa fa-check-circle text-success"></i>
+                            {% else %}
+                                <i class="fa fa-times-circle text-danger"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Is Superuser</th>
+                        <td>
+                            {% if user.is_superuser %}
+                                <i class="fa fa-check-circle text-success"></i>
+                            {% else %}
+                                <i class="fa fa-times-circle text-danger"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Last login</th>
+                        <td>{{profile.last_login}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-body">
+                <h5 class="text-center">Change password</h5>
+                <hr>
+                <form method="post" action="{% url 'change_password' %}">
+                    {% csrf_token %}
+                      {% include 'includes/form.html' %}
+                    <div>
+                        <button type="submit" class="btn bg btn-sm btn-block text-light">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

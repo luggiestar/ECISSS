@@ -1,0 +1,78 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+<div class="card card-body">
+    <div class="mb-3">
+       <button class="btn btn-sm btn-success text-light" data-toggle="modal" data-target="#add_acy">
+           Academic Teaching Calendar <i class="fa fa-plus-circle"></i></button>
+    </div>
+    <table class="table" id="datatable">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Topic</th>
+                <th>Term</th>
+                <th>Year</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Total Weeks</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teaching_calendar in teaching_calendars %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{teaching_calendar.topic.name}}</td>
+                    <td>{{teaching_calendar.academic_term.term}}</td>
+                    <td>{{teaching_calendar.academic_term.academic_year}}</td>
+                    <td>{{teaching_calendar.start_date}}</td>
+                    <td>{{teaching_calendar.end_date}}</td>
+                    <td>{{teaching_calendar.total_week}}</td>
+                    <td>
+                        <a type="button" data-target="#delete{{teaching_calendar.id}}" data-toggle="modal" >
+                            <i class="fa fa-trash text-danger"></i>
+                        </a>
+                        <a href="{% url 'edit_teaching_calendar' teaching_calendar.id %}">
+                          <i class="fa fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+                <div class="modal fade" id="delete{{teaching_calendar.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-light">
+                                Delete {{teaching_calendar.topic}} {{teaching_calendar.academic_term}}
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete
+                                  {{teaching_calendar.topic}} {{teaching_calendar.academic_term}}?</p>
+                                <form action="{% url 'delete_teaching_calendar' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input value="{{teaching_calendar.id}}" name="teaching_calendar_id" hidden readonly>
+                                    <button class="btn btn-danger btn-sm">Yes delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="add_acy">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light">Register Teaching Calendar</div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% include 'includes/form.html' %}
+                    <div class="form-group">
+                        <button class="btn btn-success text-light ">Save teaching calendar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

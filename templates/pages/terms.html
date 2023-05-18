@@ -1,0 +1,65 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+<div class="card card-body">
+    <div class="mb-3">
+       <button class="btn btn-sm btn-success text-light" data-toggle="modal" data-target="#add_term">Register new Term</button>
+    </div>
+    <table class="table" id="datatable">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for term in terms %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{term.name}}</td>
+                    <td>
+                        <a type="button" data-target="#delete{{term.id}}" data-toggle="modal" >
+                            <i class="fa fa-trash text-danger"></i>
+                        </a>
+                        <a href="{% url 'edit_term' term.id %}"><i class="fa fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+                <div class="modal fade" id="delete{{term.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-light">
+                                Delete {{term.name}}
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this subject?</p>
+                                <form action="{% url 'delete_term' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input value="{{term.id}}" name="term_id" hidden readonly>
+                                    <button class="btn btn-danger btn-sm">Yes delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="add_term">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light">Register new Term</div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% include 'includes/form.html' %}
+                    <div class="form-group">
+                        <button class="btn btn-success text-light ">Save Term</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
