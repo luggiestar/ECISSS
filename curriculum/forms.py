@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
 from django.forms import ModelForm
 from django_select2.forms import Select2Widget
@@ -94,6 +95,7 @@ class StaffForm(forms.Form):
 
     def save(self):
         # Create and save new User object with form data
+        hashed_password = make_password(self.cleaned_data['password1'])
         user = User.objects.create(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
@@ -101,7 +103,7 @@ class StaffForm(forms.Form):
             sex=self.cleaned_data['sex'],
             email=self.cleaned_data['email'],
             username=self.cleaned_data['username'],
-            password=self.cleaned_data['password1'],
+            password=hashed_password
         )
 
         staff = Staff.objects.create(

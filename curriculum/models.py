@@ -1,5 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
@@ -87,7 +87,7 @@ class School(models.Model):
         return f"{self.name}"
 
 
-class User(AbstractUser):
+class User(AbstractUser, PermissionsMixin):
     # username = None
 
     first_name = models.CharField(max_length=100, null=True, blank=False)

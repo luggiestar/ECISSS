@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card card-body">
     <div class="mb-3">
-       <button class="btn btn-sm btn-success text-light" data-toggle="modal" data-target="#add_acy">
+       <button class="btn btn-sm bg-gradient-success text-light" data-toggle="modal" data-target="#add_acy">
            Academic Teaching Calendar <i class="fa fa-plus-circle"></i></button>
     </div>
     <table class="table" id="datatable">
@@ -62,13 +62,13 @@
 <div class="modal fade" id="add_acy">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-success text-light">Register Teaching Calendar</div>
+            <div class="modal-header bg-gradient-success text-light">Register Teaching Calendar</div>
             <div class="modal-body">
                 <form method="POST">
                     {% csrf_token %}
                     {% include 'includes/form.html' %}
                     <div class="form-group">
-                        <button class="btn btn-success text-light ">Save teaching calendar</button>
+                        <button class="btn bg-gradient-success text-light ">Save teaching calendar</button>
                     </div>
                 </form>
             </div>

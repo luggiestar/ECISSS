@@ -77,13 +77,13 @@
 <div class="modal fade" id="add_user">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-light">New User</div>
+            <div class="modal-header bg-gradient-success text-light">New User</div>
             <div class="modal-body">
                 <form method="POST">
                     {% csrf_token %}
                     {% include 'includes/row-form.html' %}
                     <div class="form-group">
-                        <button class="btn btn-primary text-light ">Save user</button>
+                        <button class="btn bg-success btn-sm text-light ">Save user</button>
                     </div>
                 </form>
             </div>
