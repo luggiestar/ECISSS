@@ -33,10 +33,10 @@ def save_user(request):
         if form.is_valid():
             form.save()
             messages.success(request, f"User created successfully")
-            return redirect('users')
+            return redirect('user_list')
         else:
             messages.error(request, f"User note created successfully")
-            return redirect('users')
+            return redirect('user_list')
 
 
 def change_password(request):
@@ -77,7 +77,7 @@ def edit_user(request, user_id):
             return redirect('users')
         else:
             messages.success(request, f"User not updated successfully")
-            return redirect('users')
+            return redirect('user_list')
 
     context = {
         'form': form
@@ -89,54 +89,44 @@ def edit_user(request, user_id):
 def delete_user(request):
     if request.method == 'POST':
         user_id = request.POST['user_id']
-        try:
-            get_user = get_object_or_404(User, id=user_id)
-            name = f'{get_user.first_name} {get_user.last_name}'
-            get_user.delete()
-            messages.success(request, f"{name} deleted successfully")
-            return redirect('users')
-        except:
-            messages.error(request, f"User with the given not exist")
-            return redirect('users')
+
+        get_user = get_object_or_404(User, id=user_id)
+        name = f'{get_user.first_name} {get_user.last_name}'
+        get_user.delete()
+        messages.success(request, f"{name} deleted successfully")
+        return redirect('users')
 
 
 def set_superuser(request):
     user_id = request.GET['user_id']
     value = request.GET['value']
-    try:
-        get_user = get_object_or_404(User, id=user_id)
-        get_user.is_superuser = value
-        get_user.save()
-        messages.error(request, "User Status updated successfully")
-        return redirect('users')
-    except:
-        messages.error(request, f"User with the given not exist")
-        return redirect('users')
+
+    get_user = get_object_or_404(User, id=user_id)
+    get_user.is_superuser = value
+    get_user.save()
+    messages.success(request, "User Status updated successfully")
+    return redirect('user_list')
 
 
 def set_staff(request):
     user_id = request.GET['user_id']
     value = request.GET['value']
-    try:
-        get_user = get_object_or_404(User, id=user_id)
-        get_user.is_staff = value
-        get_user.save()
-        messages.error(request, "User Status updated successfully")
-        return redirect('users')
-    except:
-        messages.error(request, f"User with the given not exist")
-        return redirect('users')
+    # try:
+    get_user = get_object_or_404(User, id=user_id)
+    get_user.is_staff = value
+    get_user.save()
+    messages.success(request, "User Status updated successfully")
+
+    return redirect('user_list')
 
 
 def set_active(request):
     user_id = request.GET['user_id']
     value = request.GET['value']
-    try:
-        get_user = get_object_or_404(User, id=user_id)
-        get_user.is_active = value
-        get_user.save()
-        messages.error(request, "User Status updated successfully")
-        return redirect('users')
-    except:
-        messages.error(request, f"User with the given not exist")
-        return redirect('users')
+
+    get_user = get_object_or_404(User, id=user_id)
+    get_user.is_active = value
+    get_user.save()
+    messages.success(request, "User Status updated successfully")
+    return redirect('user_list')
+

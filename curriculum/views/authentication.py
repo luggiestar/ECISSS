@@ -13,11 +13,11 @@ def login_view(request):
             login(request, user)
             return redirect('dashboard')
         else:
-            messages.error('invalid username or password')
+            messages.error(request, 'invalid username or password')
             return redirect('login')
     return render(request, 'authentication/user-login.html')
 
 
 def user_logout(request):
     logout(request)
-    return redirect('login_view')
+    return redirect('login')

@@ -6,7 +6,9 @@ from ..models import Staff
 
 
 def staffs(request):
-    get_staff = Staff.objects.all()
+    get_school = Staff.objects.filter(user=request.user).first()
+    get_staff_school = get_school.school
+    get_staff = Staff.objects.filter(school=get_staff_school)
     form = StaffForm
 
     if request.method == 'POST':
