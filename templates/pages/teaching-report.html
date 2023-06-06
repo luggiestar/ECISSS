@@ -5,14 +5,7 @@
 <div class="card card-body">
     {% if request.user.is_superuser or staff_status == "academic master" %}
         <div class="mb-3">
-            <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#add_user">Register new Staff</button>
-            <button class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#upload">
-                Upload Staff <i class="fa fa-file-excel-o"></i>
-            </button>
-            <a class="btn btn-sm btn-outline-warning" href="{% url 'staff_entry_template' 'staff_entry_template' %}">
-                Get Staff Template <i class="fa fa-download"></i>
-            </a>
-        </div>
+            <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#add_user">Add Report</button>
     {% endif %}
     <table class="table" id="datatable">
         <thead>
@@ -22,7 +15,6 @@
                 <th>Last Name</th>
                 <th>Sex</th>
                 <th>Phone</th>
-<!--                <th>Email</th>-->
                 <th>School</th>
                 <th>Role</th>
                 <th>Location</th>

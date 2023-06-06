@@ -181,6 +181,7 @@ class AcademicYear(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     total_week = models.IntegerField(null=True, blank=True)
+    is_current = models.BooleanField(default=False)
 
     # clean() method is overridden to provide the custom validation logic
     def clean(self):
@@ -199,6 +200,14 @@ class AcademicYear(models.Model):
         db_table = "academic_year"
         verbose_name = "Academic Year"
         verbose_name_plural = "Academic Year"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['is_current'],
+                condition=models.Q(is_current=True),
+                name='one_current_academic_year'
+            )
+        ]
 
     def __str__(self):
         return f"{self.name}"
@@ -291,7 +300,7 @@ class Workload(models.Model):
 
 class TeachingReport(models.Model):
     workload = models.ForeignKey(Workload, on_delete=models.CASCADE, null=False, related_name="report_workload")
-    verifier = models.ForeignKey(Staff, on_delete=models.CASCADE, null=False, related_name="report_verifier")
+    verifier = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True, related_name="report_verifier")
     calendar = models.ForeignKey(TeachingCalendar, on_delete=models.CASCADE, null=False, related_name="report_tc")
     report = models.TextField()
     comment = models.TextField()
@@ -302,7 +311,6 @@ class TeachingReport(models.Model):
         db_table = "teaching_report"
         verbose_name = "Teaching Report"
         verbose_name_plural = "Teaching Report"
-
 
     def __str__(self):
         return f"{self.workload} {self.verifier}"

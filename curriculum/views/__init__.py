@@ -10,3 +10,7 @@ from .topics import *
 from .academic_year import *
 from .academic_term import *
 from .teaching_calendar import *
+from .excel_views import *
+from .workload import *
+from .teacher_workload import *
+from .teaching_report import *

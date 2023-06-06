@@ -1,16 +1,18 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 
-from ..forms import UserForm, UserEditForm, ChangePasswordForm
+from ..forms import UserForm, UserEditForm, ChangePasswordForm, StaffEntryForm
 from ..models import User
 
 
 def users(request):
     get_user = User.objects.all()
     form = UserForm
+    user_entry_form = StaffEntryForm
     context = {
         'users': get_user,
-        'form': form
+        'form': form,
+        'user_form': user_entry_form
     }
 
     return render(request, 'pages/users.html', context)
@@ -74,7 +76,7 @@ def edit_user(request, user_id):
         if form.is_valid():
             form.save()
             messages.success(request, f"User updated successfully")
-            return redirect('users')
+            return redirect('user_list')
         else:
             messages.success(request, f"User not updated successfully")
             return redirect('user_list')
@@ -94,7 +96,7 @@ def delete_user(request):
         name = f'{get_user.first_name} {get_user.last_name}'
         get_user.delete()
         messages.success(request, f"{name} deleted successfully")
-        return redirect('users')
+        return redirect('user_list')
 
 
 def set_superuser(request):
