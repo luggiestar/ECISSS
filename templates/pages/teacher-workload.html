@@ -1,0 +1,31 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+    <div class="row">
+        <div class="col-md-12 border-left-warning card-body card  shadow-sm">
+            <h6>You have {{workloads.count}} subject to teach <b>{{academic_year}}</b></h6>
+        </div>
+    </div>
+
+    {% if workloads %}
+        <div class="row">
+            {% for workload in workloads %}
+                <a class="col-md-3 nav-link" href="">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <p class="text-center"><i class="fas fa-book-open fa-2x text-success"></i></p>
+                            <h5 class="text-center text-dark">{{workload.subject.name}}</h5>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12 border-left-warning card-body card  shadow-sm">
+                <h6>No workload configured for you in <b>{{academic_year}}</b></h6>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

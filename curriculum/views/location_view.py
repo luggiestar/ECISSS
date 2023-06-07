@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render, redirect
 
@@ -5,6 +6,7 @@ from ..forms import RegionForm
 from ..models import Region, District
 
 
+@login_required(login_url='/')
 def location(request):
     get_region = Region.objects.annotate(num_districts=Count('region_districts')).values('name', 'num_districts', 'id')
     get_district = District.objects.all().order_by('name')
@@ -17,6 +19,7 @@ def location(request):
     return render(request, 'pages/location.html', context)
 
 
+@login_required(login_url='/')
 def save_district(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -29,6 +32,7 @@ def save_district(request):
         return redirect('location')
 
 
+@login_required(login_url='/')
 def save_region(request):
     if request.method == 'POST':
         form = RegionForm(request.POST)

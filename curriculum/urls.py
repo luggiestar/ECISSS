@@ -39,8 +39,12 @@ urlpatterns = [
     path('teaching-calendars', teaching_calendar_list, name="teaching_calendar_list"),
     path('edit-teaching-calendar/<teaching_calendar_id>', edit_teaching_calendar, name="edit_teaching_calendar"),
     path('delete-teaching-calendar', delete_teaching_calendar, name="delete_teaching_calendar"),
+    path('teaching-workload', workload, name="teaching_workload"),
+    path('edit-workload/<workload_id>', edit_workload, name="edit_workload"),
+    path('delete-workload/', delete_workload, name="delete_workload"),
 
-
+    path('teacher-workload/', teacher_workload, name="teacher_workload"),
+    # path('teaching-report/', teaching_report, name="teaching_report"),
 
     # users path
     path('users-list', users, name="user_list"),
@@ -55,4 +59,6 @@ urlpatterns = [
 
     # staff
     path('staffs-list', staffs, name="staff_list"),
+    path('staff-entry-template/<templ_name>', staff_entry_template, name="staff_entry_template"),
+    path('upload-staff-entry', upload_staff_entry, name="upload_staff_entry"),
 ]

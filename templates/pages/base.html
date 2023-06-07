@@ -74,7 +74,7 @@
             </li>
             {% endif %}
 
-            {% if staff_status == "head master" or request.user.is_superuser %}
+            {% if staff_status == "head master" or staff_status == "academic master" or request.user.is_superuser %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#academic"
                     aria-expanded="true" aria-controls="users">
@@ -118,18 +118,17 @@
                 </a>
                 <div id="teaching" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-gradient py-2 collapse-inner rounded">
-                        {% if staff_status == "head master" or request.user.is_superuser %}
-                        <a class="collapse-item text-light" href="{% url 'teaching_calendar_list' %}">
-                            <i class="fa fa-calendar"></i> Teaching calendar
-                        </a>
+                        {% if staff_status == "head master" or staff_status == "academic master" or request.user.is_superuser %}
+                            <a class="collapse-item text-light" href="{% url 'teaching_calendar_list' %}">
+                                <i class="fa fa-calendar"></i> Teaching calendar
+                            </a>
+                            <a class="collapse-item text-light" href="{% url 'teaching_workload' %}">
+                                <i class="fa fa-cogs"></i> Workload
+                            </a>
                         {% endif %}
-                        <a class="collapse-item text-light" href="">
-                            <i class="fa fa-cogs"></i> Workload
-                        </a>
-                        <a class="collapse-item text-light" href="">
+                        <a class="collapse-item text-light" href="{% url 'teacher_workload' %}">
                             <i class="fa fa-file-pdf"></i> Teaching Report
                         </a>
-
                     </div>
                 </div>
             </li>

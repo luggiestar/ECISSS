@@ -1,3 +1,5 @@
+import os
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
@@ -12,6 +14,18 @@ GENDER = (
 )
 phone_regex = RegexValidator(regex=r'[0][6-9][0-9]{8}', message="Phone number must be entered in the format: "
                                                                 "'0.....'. Up to 10 digits allowed.")
+
+
+def news_excel_validation(value):
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.csv', '.xlsx']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError(u'allowed file format is .csv and .xlsx')
+
+
+class StaffEntryForm(forms.Form):
+    staff_entry = forms.FileField(label="Staff Entry", required=True, validators=[news_excel_validation],
+                                  help_text="upload an staff")
 
 
 class SubjectForm(ModelForm):
@@ -70,6 +84,22 @@ class UserEditForm(ModelForm):
         model = User
         fields = ('first_name', 'last_name', 'phone', 'sex', 'email', 'username')
 
+
+class WorkLoadForm(ModelForm):
+    teacher = forms.ModelChoiceField(queryset=Staff.objects.all(), widget=Select2Widget)
+    academic_year = forms.ModelChoiceField(queryset=AcademicYear.objects.filter(is_current=True), widget=Select2Widget)
+    level = forms.ModelChoiceField(queryset=Level.objects.all(), widget=Select2Widget)
+    subject = forms.ModelChoiceField(queryset=Subject.objects.all(), widget=Select2Widget)
+
+    class Meta:
+        model = Workload
+        fields = ('teacher', 'academic_year', 'level', 'subject', )
+
+class TeachingReportForm(ModelForm):
+
+    class Meta:
+        model = TeachingReport
+        fields = ('calendar', 'report')
 
 class ChangePasswordForm(forms.Form):
     current_password = forms.CharField(widget=forms.PasswordInput(), label='Current Password')

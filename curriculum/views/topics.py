@@ -1,10 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import Topic
 from ..forms import TopicForm
 from django.db.utils import IntegrityError
 
 
+@login_required(login_url='/')
 def topic_list(request):
     get_topic = Topic.objects.all()
     if request.method == 'POST':
@@ -30,6 +32,7 @@ def topic_list(request):
     return render(request, 'pages/topics.html', context)
 
 
+@login_required(login_url='/')
 def edit_topic(request, topic_id):
     instance = Topic.objects.filter(id=topic_id).first()
     if request.method == 'POST':
@@ -55,6 +58,7 @@ def edit_topic(request, topic_id):
     return render(request, 'pages/edit-topic.html', context)
 
 
+@login_required(login_url='/')
 def delete_topic(request):
     if request.method == 'POST':
         topic_id = request.POST['topic_id']
