@@ -74,9 +74,9 @@ def edit_user(request, user_id):
         if form.is_valid():
             form.save()
             messages.success(request, f"User updated successfully")
-            return redirect('users')
+            return redirect('user_list')
         else:
-            messages.success(request, f"User not updated successfully")
+            messages.error(request, f"{form.errors}  User not updated successfully")
             return redirect('user_list')
 
     context = {
@@ -94,7 +94,7 @@ def delete_user(request):
         name = f'{get_user.first_name} {get_user.last_name}'
         get_user.delete()
         messages.success(request, f"{name} deleted successfully")
-        return redirect('users')
+        return redirect('user_list')
 
 
 def set_superuser(request):
