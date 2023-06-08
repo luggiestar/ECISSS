@@ -93,13 +93,14 @@ class WorkLoadForm(ModelForm):
 
     class Meta:
         model = Workload
-        fields = ('teacher', 'academic_year', 'level', 'subject', )
+        fields = ('teacher', 'academic_year', 'level', 'subject',)
+
 
 class TeachingReportForm(ModelForm):
-
     class Meta:
         model = TeachingReport
         fields = ('calendar', 'report')
+
 
 class ChangePasswordForm(forms.Form):
     current_password = forms.CharField(widget=forms.PasswordInput(), label='Current Password')

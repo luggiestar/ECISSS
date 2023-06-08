@@ -44,7 +44,7 @@ urlpatterns = [
     path('delete-workload/', delete_workload, name="delete_workload"),
 
     path('teacher-workload/', teacher_workload, name="teacher_workload"),
-    # path('teaching-report/', teaching_report, name="teaching_report"),
+    path('teaching-report/<workload_id>', teaching_report, name="teaching_report"),
 
     # users path
     path('users-list', users, name="user_list"),
