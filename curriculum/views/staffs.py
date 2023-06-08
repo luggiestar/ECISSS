@@ -8,9 +8,10 @@ from ..models import Staff
 
 @login_required(login_url='/')
 def staffs(request):
-    get_school = Staff.objects.filter(user=request.user).first()
-    get_staff_school = get_school.school
-    get_staff = Staff.objects.filter(school=get_staff_school)
+    #
+    # get_school = Staff.objects.filter(user=request.user).first()
+    # get_staff_school = get_school.school
+    get_staff = Staff.objects.all()
     form = StaffForm
     staff_entry_form = StaffEntryForm
 

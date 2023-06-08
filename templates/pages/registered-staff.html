@@ -64,14 +64,14 @@
                 <div class="modal fade" id="delete{{staff.id}}">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header bg-dark text-light">
+                            <div class="modal-header bg-gradient-success text-light">
                                 Delete {{staff.user.first_name}} {{staff.user.last_name}}
                             </div>
                             <div class="modal-body">
                                 <p>Are you sure you want to delete this staff?</p>
                                 <form action="{% url 'delete_user' %}" method="POST">
                                     {% csrf_token %}
-                                    <input value="{{staff.id}}" name="user_id" hidden>
+                                    <input value="{{staff.user.id}}" hidden name="user_id">
                                     <button class="btn btn-danger btn-sm">Yes delete</button>
                                 </form>
                             </div>

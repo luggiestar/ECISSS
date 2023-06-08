@@ -78,7 +78,7 @@ def edit_user(request, user_id):
             messages.success(request, f"User updated successfully")
             return redirect('user_list')
         else:
-            messages.success(request, f"User not updated successfully")
+            messages.error(request, f"{form.errors}  User not updated successfully")
             return redirect('user_list')
 
     context = {
