@@ -2,6 +2,11 @@
 
 {% block content %}
 {% load widget_tweaks %}
+<style>
+.django-ckeditor-widget{
+    width: 100% !important;
+}
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -20,7 +25,7 @@
                     <tbody>
                         <tr>
                             <td>{{calendar.topic}}</td>
-                            <td>{{calendar.academic_term.term.name}}-{{academic_term.academic_year.name}}</td>
+                            <td>{{calendar.academic_term.term.name}}-{{calendar.academic_term.academic_year.name}}</td>
                             <td>{{calendar.start_date}}</td>
                             <td>{{calendar.end_date}}</td>
                             <td>{{calendar.total_week}}</td>
@@ -37,16 +42,19 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="add">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-gradient-success text-white">
                 <h6>Add new Lesson</h6>
             </div>
             <div class="modal-body">
-
+                {{form.media}}
+                {% include 'includes/form.html' %}
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 from django.forms import ModelForm
 from django_select2.forms import Select2Widget
 from .models import *
+from ckeditor.widgets import CKEditorWidget
 
 GENDER = (
     ('M', 'Male'),
@@ -96,10 +97,12 @@ class WorkLoadForm(ModelForm):
         fields = ('teacher', 'academic_year', 'level', 'subject',)
 
 
-class TeachingReportForm(ModelForm):
+class TeachingReportForm(forms.ModelForm):
+    report = forms.CharField(widget=CKEditorWidget())
+
     class Meta:
         model = TeachingReport
-        fields = ('calendar', 'report')
+        fields = ('report', )
 
 
 class ChangePasswordForm(forms.Form):
