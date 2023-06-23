@@ -62,6 +62,10 @@ urlpatterns = [
     path('user-role', user_role, name="user_role"),
     path('edit-role/<role_id>', edit_role, name="edit_role"),
 
+    # rating
+    path('rating', rating, name="rating"),
+
+
     # staff
     path('staffs-list', staffs, name="staff_list"),
     path('staff-entry-template/<templ_name>', staff_entry_template, name="staff_entry_template"),
