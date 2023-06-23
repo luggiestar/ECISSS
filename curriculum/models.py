@@ -16,6 +16,37 @@ phone_regex = RegexValidator(regex=r'[0][6-9][0-9]{8}', message="Phone number mu
 
 
 # Create your models here.
+class CustomUserManager(BaseUserManager):
+    """
+    Custom user model manager where email is the unique identifiers
+    for authentication instead of usernames.
+    """
+
+    def create_user(self, username, password, **extra_fields):
+        """
+        Create and save a User with the given email and password.
+        """
+        if not username:
+            raise ValueError(_('The Username must be set'))
+        username = username
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, username, password, **extra_fields):
+        """
+        Create and save a SuperUser with the given email and password.
+        """
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError(_('Superuser must have is_staff=True.'))
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError(_('Superuser must have is_superuser=True.'))
+        return self.create_user(username, password, **extra_fields)
 
 
 class Region(models.Model):
@@ -272,9 +303,9 @@ class TeachingReport(models.Model):
     verifier = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True, related_name="report_verifier")
     calendar = models.ForeignKey(TeachingCalendar, on_delete=models.CASCADE, null=False, related_name="report_tc")
     report = RichTextField()
-    comment = RichTextField()
     created_at = models.DateTimeField(auto_now_add=True)
     verified_at = models.DateTimeField(auto_now=True)
+    is_verified = models.BooleanField(default=False)
 
     class Meta:
         db_table = "teaching_report"

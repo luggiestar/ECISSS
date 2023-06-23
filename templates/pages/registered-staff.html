@@ -58,7 +58,7 @@
                         <a type="button" data-target="#delete{{staff.id}}" data-toggle="modal" >
                             <i class="fa fa-trash text-danger"></i>
                         </a>
-                        <a href="{% url 'edit_user' user.id %}"><i class="fa fa-edit text-warning"></i></a>
+                        <a href="{% url 'edit_user' staff.id %}"><i class="fa fa-edit text-warning"></i></a>
                     </td>
                 </tr>
                 <div class="modal fade" id="delete{{staff.id}}">

@@ -102,7 +102,13 @@ class TeachingReportForm(forms.ModelForm):
 
     class Meta:
         model = TeachingReport
-        fields = ('report', )
+        fields = ('report',)
+
+
+class RoleForm(ModelForm):
+    class Meta:
+        model = Role
+        fields = ('name',)
 
 
 class ChangePasswordForm(forms.Form):
