@@ -294,7 +294,7 @@ class TeachingProgressSummary(models.Model):
     class Meta:
         db_table = "teaching_progress_summary"
         verbose_name = "Teaching Progress_summary"
-        verbose_name_plural = "Teaching Calendar"
+        verbose_name_plural = "Teaching Progress Summary"
         unique_together = ['subject', 'level', 'school', 'academic_year']
 
     def __str__(self):

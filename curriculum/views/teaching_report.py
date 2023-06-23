@@ -83,8 +83,10 @@ def verify_report(request, report_id):
     if request.method == "POST":
         report_id = request.POST['report_id']
         get_verifier = Staff.objects.filter(user=request.user).first()
-        TeachingReport.objects.filter(is_verified=False, id=report_id).update(is_verified=True, verifier=get_verifier)
-
+        update_report = TeachingReport.objects.filter(is_verified=False, id=report_id).first()
+        update_report.is_verified = True
+        update_report.verifier = get_verifier
+        update_report.save()
         messages.success(request, "Report Verified successfully")
         return redirect('verify')
 

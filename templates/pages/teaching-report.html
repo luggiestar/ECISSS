@@ -31,9 +31,9 @@
                             <td>{{calendar.total_week}}</td>
                             <td>
                                 {% if count_current < 1 %}
-                                <button class="btn btn-success btn-sm"
+                                <button class="btn bg-gradient-success text-white btn-sm"
                                     data-toggle="modal" data-target="#add">
-                                    Add session
+                                    Create Report
                                 </button>
                                 {% else %}
                                     <span class="badge bg-gradient-success text-white"> Reported</span>
@@ -51,7 +51,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-gradient-success text-white">
-                <h6>Add new Lesson</h6>
+                <h6>Write Report</h6>
             </div>
             <div class="modal-body">
                 <form method="post">
