@@ -65,7 +65,7 @@ def teaching_report_history(request):
     role = get_staff.role.name
 
     if request.user.is_superuser or role == "academic master" or role == "head master":
-        get_reports = TeachingReport.objects.all()
+        get_reports = TeachingReport.objects.filter(workload__teacher__school=get_staff.school)
 
     elif role == "teacher":
         get_reports = TeachingReport.objects.filter(workload__teacher__user=request.user)
