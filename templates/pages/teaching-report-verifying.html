@@ -1,0 +1,53 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+<style>
+.django-ckeditor-widget{
+    width: 100% !important;
+}
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped" id="datatable">
+                    <thead>
+                        <tr>
+                            <th>subject</th>
+                            <th>Topic</th>
+                            <th>teacher</th>
+                            <th>level</th>
+                            <th>Is verified</th>
+                            <th>created Date </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for report in reports %}
+                        <tr>
+                            <td>{{report.calendar.topic.subject.name}}</td>
+                            <td>{{report.calendar.topic.name}}</td>
+                            <td>{{report.workload.teacher.user.first_name}} {{report.workload.teacher.user.last_name}}</td>
+                            <td>{{report.workload.level.name}}</td>
+                            <td>
+                                {% if report.is_verified %}
+                                    <i class="fa fa-check-circle text-success"></i>
+                                {% else %}
+                                    <i class="fa fa-times-circle text-danger"></i>
+                                {% endif %}
+                            </td>
+                            <td>{{report.created_at}}</td>
+                            <td>
+                                <a href="{% url 'verify_report' report.id %}" class="btn  btn-sm bg-gradient-success text-light" >Verify</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

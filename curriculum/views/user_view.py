@@ -1,10 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from ..forms import UserForm, UserEditForm, ChangePasswordForm, StaffEntryForm
-from ..models import User
+from ..forms import UserForm, UserEditForm, ChangePasswordForm, StaffEntryForm, RoleForm
+from ..models import User, Role
 
 
+@login_required(login_url='/')
 def users(request):
     get_user = User.objects.all()
     form = UserForm
@@ -18,6 +20,7 @@ def users(request):
     return render(request, 'pages/users.html', context)
 
 
+@login_required(login_url='/')
 def user_profile(request):
     get_profile = User.objects.filter(id=request.user.id).first()
     form = ChangePasswordForm
@@ -29,6 +32,63 @@ def user_profile(request):
     return render(request, 'pages/user-profile.html', context)
 
 
+@login_required(login_url='/')
+def user_role(request):
+    get_role = Role.objects.filter()
+    form = RoleForm()
+    if request.method == 'POST':
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Role created successfully")
+            return redirect('user_role')
+        else:
+            messages.error(request, f"Role note created successfully")
+            return redirect('user_role')
+
+    context = {
+        'roles': get_role,
+        'form': form
+    }
+
+    return render(request, 'pages/user-role.html', context)
+
+
+@login_required(login_url='/')
+def delete_role(request):
+    if request.method == 'POST':
+        role_id = request.POST['role_id']
+
+        get_role = get_object_or_404(Role, id=role_id)
+        name = f'{get_role.name}'
+        get_role.delete()
+        messages.success(request, f"{name} deleted successfully")
+        return redirect('user_role')
+
+
+@login_required(login_url='/')
+def edit_role(request, role_id):
+    role_instance = User.objects.filter(id=role_id).first()
+    form = RoleForm(instance=role_instance)
+
+    if request.method == 'POST':
+        form = RoleForm(request.POST, instance=role_instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Role updated successfully")
+            return redirect('user_list')
+        else:
+            messages.error(request, f"{form.errors}  Role not updated successfully")
+            return redirect('user_list')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'pages/edit-user.html', context)
+
+
+@login_required(login_url='/')
 def save_user(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -41,6 +101,7 @@ def save_user(request):
             return redirect('user_list')
 
 
+@login_required(login_url='/')
 def change_password(request):
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
@@ -48,7 +109,7 @@ def change_password(request):
             new_password = form.cleaned_data['new_password']
             repeat_password = request.POST['repeat_password']
 
-            if new_password == repeat_password: # Check if two password match
+            if new_password == repeat_password:  # Check if two password match
                 user_instance = User.objects.filter(id=request.user.id).first()
                 current_password = form.cleaned_data['current_password']
                 if user_instance.check_password(current_password):  # Check current password
@@ -67,6 +128,7 @@ def change_password(request):
             return redirect('user_profile')
 
 
+@login_required(login_url='/')
 def edit_user(request, user_id):
     user_instance = User.objects.filter(id=user_id).first()
     form = UserEditForm(instance=user_instance)
@@ -88,6 +150,7 @@ def edit_user(request, user_id):
     return render(request, 'pages/edit-user.html', context)
 
 
+@login_required(login_url='/')
 def delete_user(request):
     if request.method == 'POST':
         user_id = request.POST['user_id']
@@ -99,6 +162,7 @@ def delete_user(request):
         return redirect('user_list')
 
 
+@login_required(login_url='/')
 def set_superuser(request):
     user_id = request.GET['user_id']
     value = request.GET['value']
@@ -110,6 +174,7 @@ def set_superuser(request):
     return redirect('user_list')
 
 
+@login_required(login_url='/')
 def set_staff(request):
     user_id = request.GET['user_id']
     value = request.GET['value']
@@ -122,6 +187,7 @@ def set_staff(request):
     return redirect('user_list')
 
 
+@login_required(login_url='/')
 def set_active(request):
     user_id = request.GET['user_id']
     value = request.GET['value']
@@ -131,4 +197,3 @@ def set_active(request):
     get_user.save()
     messages.success(request, "User Status updated successfully")
     return redirect('user_list')
-

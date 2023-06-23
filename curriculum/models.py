@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from datetime import datetime, timedelta
+from ckeditor.fields import RichTextField
 
 GENDER = (
     ('M', 'Male'),
@@ -302,10 +302,10 @@ class TeachingReport(models.Model):
     workload = models.ForeignKey(Workload, on_delete=models.CASCADE, null=False, related_name="report_workload")
     verifier = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True, related_name="report_verifier")
     calendar = models.ForeignKey(TeachingCalendar, on_delete=models.CASCADE, null=False, related_name="report_tc")
-    report = models.TextField()
-    comment = models.TextField()
+    report = RichTextField()
     created_at = models.DateTimeField(auto_now_add=True)
     verified_at = models.DateTimeField(auto_now=True)
+    is_verified = models.BooleanField(default=False)
 
     class Meta:
         db_table = "teaching_report"

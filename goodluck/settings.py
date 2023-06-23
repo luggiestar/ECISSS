@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-l3+$ct2a67vmihv7cfx_gsfj6fzn$&4e@3fywy(dll!bmutn4d
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'curriculum',
-    'xlsxwriter'
+    'xlsxwriter',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +53,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'goodluck.urls'
 AUTH_USER_MODEL = 'curriculum.User'
+
+#
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [["Font", "FontSize", "Bold", "Italic", "Underline", "Strike", "SpellChecker"],
+                    ['NumberedList', 'BulletedList', "Indent", "Outdent", 'JustifyLeft', 'JustifyCenter',
+                     'JustifyRight', 'JustifyBlock'],
+                    ["Image", "Table", "Link", "Anchor", "SectionLink", "Subscript", "Superscript"], ['Undo', 'Redo'],
+                    # ["Source"],
+                    ["Maximize"]],
+        'height': '20rem',
+        'width': '100%',
+        'toolbarCanCollapse': False,
+    },
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -71,7 +86,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'goodluck.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -114,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -125,7 +138,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

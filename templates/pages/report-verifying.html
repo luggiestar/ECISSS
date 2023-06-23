@@ -1,0 +1,95 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+<style>
+.django-ckeditor-widget{
+    width: 100% !important;
+}
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="border-left-danger p-4 card mb-3 shadow">
+            please Read the submitted carefully the click verify button then write your comment on the provided input
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-gradient-success text-white">Report Detail</div>
+            <div class="card-body">
+                <table class="table ">
+                    <tr>
+                        <th>subject</th>
+                        <td>{{report.calendar.topic.subject.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Topic</th>
+                        <td>{{report.calendar.topic.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>teacher</th>
+                        <td>{{report.workload.teacher.user.first_name}} {{report.workload.teacher.user.last_name}}</td>
+
+                    </tr>
+                    <tr>
+                        <th>level</th>
+                        <td>{{report.workload.level.name}}</td>
+
+                    </tr>
+                    <tr>
+                        <th>Is verified</th>
+                        <td>
+                            {% if report.is_verified %}
+                                <i class="fa fa-check-circle text-success"></i>
+                            {% else %}
+                                <i class="fa fa-times-circle text-danger"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-gradient-success text-light d-flex justify-content-between">
+                <h6>Teacher Report</h6>
+
+                {% if not report.is_verified %}
+                    <button class="btn btn-outline-success text-light" type="button" data-target="#verify" data-toggle="modal">
+                        Verify
+                    </button>
+                {% else %}
+                <div>
+                    <span class="badge bg-white text-success">Report Verified</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {{ report.report | safe }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="verify">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-success text-white ">
+                <h6>Verify Report</h6>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <p>Are you sure you want to verify this report?</p>
+                    <input type="number" name="report_id" value="{{report.id}}" hidden readonly>
+                    {% csrf_token %}
+                    <div class="mt-3">
+                        <button class="btn  btn-sm bg-gradient-success text text-light" >Yes Verify</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

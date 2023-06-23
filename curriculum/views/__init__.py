@@ -14,3 +14,4 @@ from .excel_views import *
 from .workload import *
 from .teacher_workload import *
 from .teaching_report import *
+from .rating import *

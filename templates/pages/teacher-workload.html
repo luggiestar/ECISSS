@@ -11,7 +11,7 @@
     {% if workloads %}
         <div class="row">
             {% for workload in workloads %}
-                <a class="col-md-3 nav-link" href="">
+                <a class="col-md-3 nav-link" href="{% url 'teaching_report' workload.id %}">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <p class="text-center"><i class="fas fa-book-open fa-2x text-success"></i></p>

@@ -44,7 +44,10 @@ urlpatterns = [
     path('delete-workload/', delete_workload, name="delete_workload"),
 
     path('teacher-workload/', teacher_workload, name="teacher_workload"),
-    # path('teaching-report/', teaching_report, name="teaching_report"),
+    path('teaching-report/<workload_id>', teaching_report, name="teaching_report"),
+    path('teaching-report-verifying', teaching_report_verify, name="verify"),
+    path('teaching-report-history', teaching_report_history, name="report_history"),
+    path('report-verifying/<report_id>', verify_report, name="verify_report"),
 
     # users path
     path('users-list', users, name="user_list"),
@@ -56,6 +59,12 @@ urlpatterns = [
     path('set-staff', set_staff, name="set_staff"),
     path('set-active', set_active, name="set_active"),
     path('delete-user', delete_user, name="delete_user"),
+    path('user-role', user_role, name="user_role"),
+    path('edit-role/<role_id>', edit_role, name="edit_role"),
+
+    # rating
+    path('rating', rating, name="rating"),
+
 
     # staff
     path('staffs-list', staffs, name="staff_list"),
