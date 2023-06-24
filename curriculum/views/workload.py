@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from ..forms import WorkLoadForm
-from ..models import Workload
+from ..models import Workload, Staff
 
 
 @login_required(login_url='/')
 def workload(request):
-    get_workload = Workload.objects.all()
+    get_staff = Staff.objects.filter(user=request.user).first()
+    get_workload = Workload.objects.filter(teacher__school=get_staff.school)
+
     form = WorkLoadForm()
 
     if request.method == "POST":

@@ -65,12 +65,11 @@ def teaching_report_verify(request):
 def teaching_report_history(request):
     get_staff = Staff.objects.filter(user=request.user).first()
     role = get_staff.role.name
-
-    if request.user.is_superuser or role == "academic master" or role == "head master":
+    if request.user.is_superuser or role.lower() == "academic master" or role.lower() == "head master":
         get_reports = TeachingReport.objects.filter(workload__teacher__school=get_staff.school)
-
     else:
         get_reports = TeachingReport.objects.filter(workload__teacher__user=request.user)
+        print(role)
 
     context = {
         'reports': get_reports
