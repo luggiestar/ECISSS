@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from ..models import TeachingCalendar, Workload, TeachingReport, Staff
 from ..forms import TeachingReportForm
 import datetime
+from ..decoretor import *
+
 
 
 @login_required(login_url='/')
@@ -67,7 +69,7 @@ def teaching_report_history(request):
     if request.user.is_superuser or role == "academic master" or role == "head master":
         get_reports = TeachingReport.objects.filter(workload__teacher__school=get_staff.school)
 
-    elif role == "teacher":
+    else:
         get_reports = TeachingReport.objects.filter(workload__teacher__user=request.user)
 
     context = {

@@ -30,11 +30,13 @@
                             <td>{{calendar.end_date}}</td>
                             <td>{{calendar.total_week}}</td>
                             <td>
-                                {% if count_current < 1 %}
-                                <button class="btn bg-gradient-success text-white btn-sm"
-                                    data-toggle="modal" data-target="#add">
-                                    Create Report
-                                </button>
+                                {% if count_current < 1  %}
+                                {% if calendar.topic %}
+                                    <button class="btn bg-gradient-success text-white btn-sm"
+                                        data-toggle="modal" data-target="#add">
+                                        filling logbook
+                                    </button>
+                                {% endif %}
                                 {% else %}
                                     <span class="badge bg-gradient-success text-white"> Reported</span>
                                 {% endif %}
@@ -51,7 +53,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-gradient-success text-white">
-                <h6>Write Report</h6>
+                <h6>Filling Logbook</h6>
             </div>
             <div class="modal-body">
                 <form method="post">
@@ -61,7 +63,7 @@
                     {{form.media}}
                     {% include 'includes/form.html' %}
                     <div class="mt-3">
-                        <button class="btn  btn-sm btn-outline-success">Save Report</button>
+                        <button class="btn  btn-sm btn-outline-success">Save logbook</button>
                     </div>
                 </form>
             </div>

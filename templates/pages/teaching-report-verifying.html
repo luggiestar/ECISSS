@@ -39,7 +39,8 @@
                             </td>
                             <td>{{report.created_at}}</td>
                             <td>
-                                <a href="{% url 'verify_report' report.id %}" class="btn  btn-sm bg-gradient-success text-light" >Verify</a>
+                                <a href="{% url 'verify_report' report.id %}"
+                                   class="btn  btn-sm bg-gradient-success text-light" >Verify</a>
                             </td>
                         </tr>
                     {% endfor %}

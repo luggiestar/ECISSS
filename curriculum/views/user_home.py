@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum
 from django.shortcuts import render
-from ..models import User, Staff, School, Subject, TeachingProgressSummary
+from ..models import User, Staff, School, Subject, TeachingProgressSummary, AcademicYear
 
 
 @login_required(login_url='/')
@@ -12,10 +12,13 @@ def dashboard(request):
     subject_count = Subject.objects.all().count()
 
     get_staff = Staff.objects.filter(user=request.user).first()
-    summaries = TeachingProgressSummary.objects.filter(school=get_staff.school)
+    get_academic_year = AcademicYear.objects.filter(is_current=True).first()
+
+    summaries = TeachingProgressSummary.objects.filter(school=get_staff.school, academic_year=get_academic_year)
+
     total = TeachingProgressSummary.objects.filter(school=get_staff.school).aggregate(
         total_perc=Sum('percentage'))['total_perc']
-    print(total)
+
     context = {
         'user_count': user_count,
         'staff_count': staff_count,
