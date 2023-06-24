@@ -316,6 +316,22 @@ class Workload(models.Model):
         return f"{self.teacher} {self.academic_year} {self.level}"
 
 
+class TeachingLogbook(models.Model):
+    Workload = models.ForeignKey(Workload, on_delete=models.CASCADE, null=False, related_name="logbook_workload")
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=False, related_name="logbook_topic")
+    date = models.DateTimeField(auto_now_add=True)
+    subtopic = models.CharField(max_length=100)
+    concept_covered = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = "Logbook"
+        verbose_name = "Logbook"
+        verbose_name_plural = "Logbook"
+
+    def __str__(self):
+        return f"{self.subtopic}"
+
+
 class TeachingReport(models.Model):
     workload = models.ForeignKey(Workload, on_delete=models.CASCADE, null=False, related_name="report_workload")
     verifier = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True, related_name="report_verifier")

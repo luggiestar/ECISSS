@@ -164,6 +164,15 @@ class AcademicYearForm(forms.ModelForm):
         fields = ('name', 'start_date', 'end_date')
 
 
+class LogbookForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.DateInput())
+    end_date = forms.DateField(widget=forms.DateInput())
+
+    class Meta:
+        model = TeachingLogbook
+        fields = ('subtopic', 'concept_covered')
+
+
 class AcademicTermForm(forms.ModelForm):
     academic_year = forms.ModelChoiceField(queryset=AcademicYear.objects.all(), widget=Select2Widget)
     term = forms.ModelChoiceField(queryset=Term.objects.all(), widget=Select2Widget)
