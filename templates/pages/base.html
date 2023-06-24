@@ -277,6 +277,7 @@
     <script type="text/javascript">
 
     $(document).ready(function() {
+
         let alert =  $('.alert')
         alert.hide();
         alert.fadeTo(5000, 1000).slideUp(1000, function() {
@@ -284,7 +285,10 @@
         });
     });
     </script>
-
+<script>
+    $("#id_start_date").attr("type","date");
+    $("#id_end_date").attr("type","date");
+</script>
 </body>
 
 </html>

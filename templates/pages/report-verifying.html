@@ -55,16 +55,16 @@
             <div class="card-header bg-gradient-success text-light d-flex justify-content-between">
                 <h6>Teacher Report</h6>
 
-                {% if not report.is_verified %}
-                    {%  staff_status == "academic master %}
+                {% if not report.is_verified  %}
+                    {% if staff_status == "academic master" %}
                         <button class="btn btn-outline-success text-light" type="button" data-target="#verify" data-toggle="modal">
                             Verify
                         </button>
-                    {% endif%}
+                    {% endif %}
                 {% else %}
-                <div>
-                    <span class="badge bg-white text-success">Logbook Verified</span>
-                </div>
+                    <div>
+                        <span class="badge bg-white text-success">Logbook Verified</span>
+                    </div>
                 {% endif %}
             </div>
             <div class="card-body">
