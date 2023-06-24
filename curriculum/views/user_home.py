@@ -13,18 +13,15 @@ def dashboard(request):
 
     get_staff = Staff.objects.filter(user=request.user).first()
     get_academic_year = AcademicYear.objects.filter(is_current=True).first()
-
-    summaries = TeachingProgressSummary.objects.filter(school=get_staff.school, academic_year=get_academic_year)
-
-    total = TeachingProgressSummary.objects.filter(school=get_staff.school).aggregate(
-        total_perc=Sum('percentage'))['total_perc']
-
+    if get_staff:
+        summaries = TeachingProgressSummary.objects.filter(school=get_staff.school, academic_year=get_academic_year)
+    else:
+        summaries = TeachingProgressSummary.objects.filter(academic_year=get_academic_year)
     context = {
         'user_count': user_count,
         'staff_count': staff_count,
         'school_count': school_count,
         'subject_count': subject_count,
         'summaries': summaries,
-        'total': total
     }
     return render(request, 'pages/index.html', context)

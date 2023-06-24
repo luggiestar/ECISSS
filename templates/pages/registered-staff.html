@@ -3,7 +3,8 @@
 {% block content %}
 {% load widget_tweaks %}
 <div class="card card-body">
-    {% if request.user.is_superuser or staff_status == "academic master" or staff_status == "head master" %}
+    {{staff_status}}
+    {% if staff_status == "head master" %}
         <div class="mb-3">
             <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#add_user">Register new Staff</button>
             <button class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#upload">

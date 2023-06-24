@@ -80,6 +80,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% if summaries %}
 <div class="mt-3 card p-3 shadow-sm">
     <h5 class="mt-2">Teaching Summary</h5>
@@ -92,7 +93,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bolder text-success text-uppercase mb-1">
-                                    <h4>{{summary.subject.name}}</h4>
+                                    <h4>{{summary.subject.name}} <small></small></h4>
                                 </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
@@ -115,7 +116,5 @@
         {% endfor %}
     </div>
 </div>
-{% endif %}
-
 {% endif %}
 {% endblock %}
