@@ -15,7 +15,7 @@ def teaching_report(request, workload_id):
     level = get_workload.level
     today = datetime.date.today()
 
-    get_teaching_calendar = TeachingCalendar.objects.filter(topic__subject=subject, topic__level=level,
+    get_teaching_calendar = TeachingCalendar.objects.filter(topic__subject=subject, topic__level__name=level,
                                                             start_date__lte=today, end_date__gte=today).first()
     form = TeachingReportForm()
     form2 = LogbookForm()

@@ -96,6 +96,10 @@ class WorkLoadForm(ModelForm):
         model = Workload
         fields = ('teacher', 'academic_year', 'level', 'subject',)
 
+    def __init__(self, data):
+        super().__init__(data)
+        self.data = data
+
 
 class TeachingReportForm(forms.ModelForm):
     report = forms.CharField(widget=CKEditorWidget())

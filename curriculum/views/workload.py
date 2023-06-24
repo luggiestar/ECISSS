@@ -11,7 +11,7 @@ def workload(request):
     get_staff = Staff.objects.filter(user=request.user).first()
     get_workload = Workload.objects.filter(teacher__school=get_staff.school)
 
-    form = WorkLoadForm()
+    form = WorkLoadForm
 
     if request.method == "POST":
         form = WorkLoadForm(request.POST)
