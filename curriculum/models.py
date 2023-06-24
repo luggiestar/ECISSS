@@ -317,11 +317,12 @@ class Workload(models.Model):
 
 
 class TeachingLogbook(models.Model):
-    Workload = models.ForeignKey(Workload, on_delete=models.CASCADE, null=False, related_name="logbook_workload")
+    workload = models.ForeignKey(Workload, on_delete=models.CASCADE, null=False, related_name="logbook_workload")
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=False, related_name="logbook_topic")
     date = models.DateTimeField(auto_now_add=True)
-    subtopic = models.CharField(max_length=100)
-    concept_covered = models.CharField(max_length=100)
+    subtopic = models.CharField(max_length=200)
+    concept_covered = models.TextField()
+    evidence = models.ImageField(upload_to='evidence')
 
     class Meta:
         db_table = "Logbook"

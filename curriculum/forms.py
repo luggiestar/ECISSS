@@ -165,12 +165,9 @@ class AcademicYearForm(forms.ModelForm):
 
 
 class LogbookForm(forms.ModelForm):
-    start_date = forms.DateField(widget=forms.DateInput())
-    end_date = forms.DateField(widget=forms.DateInput())
-
     class Meta:
         model = TeachingLogbook
-        fields = ('subtopic', 'concept_covered')
+        fields = ('subtopic', 'concept_covered', 'evidence')
 
 
 class AcademicTermForm(forms.ModelForm):

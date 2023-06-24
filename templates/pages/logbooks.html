@@ -1,0 +1,69 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+{% load bootstrap_tags %}
+<style>
+.django-ckeditor-widget{
+    width: 100% !important;
+}
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped" id="datatable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Topic</th>
+                            <th>Subtopic</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for logbook in logbooks %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ logbook.topic.name }}</td>
+                                <td>{{ logbook.subtopic }}</td>
+                                <td>{{ logbook.date }}</td>
+                                <td>
+                                    <button class="btn bg-gradient-success text-white btn-sm"
+                                        data-toggle="modal" data-target="#addReport{{logbook.id}}">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <div class="modal fade" id="addReport{{logbook.id}}">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-gradient-success text-white">
+                                            <h6>View Logbook Detail</h6>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="text-center font-weight-bolder">Topic: {{ logbook.topic.name }}</h4>
+                                            <h5 class="text-center">Subtopic: {{ logbook.subtopic }}</h5>
+                                            <img src="{{logbook.evidence.url}}" alt="" class="card-img">
+                                            <div class="mt-3">
+                                                <h5 class="font-weight-bolder">Concept Covered</h5>
+                                                <p class="mt-2">
+                                                    {{logbook.concept_covered}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

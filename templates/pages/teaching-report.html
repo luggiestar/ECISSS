@@ -2,6 +2,7 @@
 
 {% block content %}
 {% load widget_tweaks %}
+{% load bootstrap_tags %}
 <style>
 .django-ckeditor-widget{
     width: 100% !important;
@@ -11,6 +12,11 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                <div class="col-md-12 border-left-warning card-body card  shadow-sm">
+                    <p>
+                        Please fill log book first then write  report
+                    </p>
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -33,9 +39,17 @@
                                 {% if count_current < 1  %}
                                 {% if calendar.topic %}
                                     <button class="btn bg-gradient-success text-white btn-sm"
-                                        data-toggle="modal" data-target="#add">
+                                        data-toggle="modal" data-target="#addReport">
+                                        filling Report
+                                    </button>
+                                    <button class="btn bg-gradient-success text-white btn-sm"
+                                        data-toggle="modal" data-target="#addlogbook">
                                         filling logbook
                                     </button>
+                                    <a class="btn bg-gradient-success text-white btn-sm"
+                                        href="{% url 'logbook_history' workload_id %}">
+                                        View Logbooks
+                                    </a>
                                 {% endif %}
                                 {% else %}
                                     <span class="badge bg-gradient-success text-white"> Reported</span>
@@ -49,11 +63,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="add">
+<div class="modal fade" id="addReport">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-gradient-success text-white">
-                <h6>Filling Logbook</h6>
+                <h6>Filling Report</h6>
             </div>
             <div class="modal-body">
                 <form method="post">
@@ -62,6 +76,27 @@
                     {% csrf_token %}
                     {{form.media}}
                     {% include 'includes/form.html' %}
+                    <div class="mt-3">
+                        <button class="btn  btn-sm btn-outline-success">Save Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addlogbook">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-success text-white">
+                <h6>Filling Logbook</h6>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'save_logbook' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="number" name="workload_id" value="{{workload_id}}" hidden readonly>
+                    <input type="number" name="topic" value="{{calendar.topic.id}}" hidden readonly>
+                    {{ form2|as_bootstrap  }}
                     <div class="mt-3">
                         <button class="btn  btn-sm btn-outline-success">Save logbook</button>
                     </div>

@@ -57,9 +57,15 @@
 
                 {% if not report.is_verified  %}
                     {% if staff_status == "academic master" %}
-                        <button class="btn btn-outline-success text-light" type="button" data-target="#verify" data-toggle="modal">
-                            Verify
-                        </button>
+                        <div class="d-flex justify-content-between">
+                                <button class="btn  btn-light text-success" type="button" data-target="#verify" data-toggle="modal">
+                                    Verify
+                                </button>
+                                <a class="btn btn-light text-success btn-sm ml-3" href="{% url 'logbook_history' report.workload.id %}">
+                                        View Logbooks
+                                </a>
+                        </div>
+
                     {% endif %}
                 {% else %}
                     <div>

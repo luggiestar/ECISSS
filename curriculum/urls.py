@@ -48,6 +48,8 @@ urlpatterns = [
     path('teaching-report-verifying', teaching_report_verify, name="verify"),
     path('teaching-report-history', teaching_report_history, name="report_history"),
     path('report-verifying/<report_id>', verify_report, name="verify_report"),
+    path('save-logbook', save_logbook, name="save_logbook"),
+    path('logbook-history/<workload_id>', logbook_history, name="logbook_history"),
 
     # users path
     path('users-list', users, name="user_list"),

@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from ..models import TeachingCalendar, Workload, TeachingReport, Staff
-from ..forms import TeachingReportForm
+from ..models import TeachingCalendar, Workload, TeachingReport, Staff, Topic, TeachingLogbook
+from ..forms import TeachingReportForm, LogbookForm
 import datetime
 from ..decoretor import *
-
 
 
 @login_required(login_url='/')
@@ -19,6 +18,7 @@ def teaching_report(request, workload_id):
     get_teaching_calendar = TeachingCalendar.objects.filter(topic__subject=subject, topic__level=level,
                                                             start_date__lte=today, end_date__gte=today).first()
     form = TeachingReportForm()
+    form2 = LogbookForm()
 
     get_current_report = TeachingReport.objects.filter(calendar=get_teaching_calendar).count()
     if request.method == "POST":
@@ -45,6 +45,7 @@ def teaching_report(request, workload_id):
     context = {
         'calendar': get_teaching_calendar,
         'form': form,
+        'form2': form2,
         'workload_id': workload_id,
         'count_current': get_current_report
     }
@@ -95,3 +96,27 @@ def verify_report(request, report_id):
         'report': get_report,
     }
     return render(request, 'pages/report-verifying.html', context)
+
+
+@login_required(login_url='/')
+def save_logbook(request):
+    if request.method == "POST":
+        form = LogbookForm(request.POST, request.FILES)
+        if form.is_valid():
+            get_form = form.save(commit=False)
+            get_workload = Workload.objects.filter(id=request.POST['workload_id']).first()
+            get_topic = Topic.objects.filter(id=request.POST['topic']).first()
+            get_form.workload = get_workload
+            get_form.topic = get_topic
+            get_form.save()
+            messages.success(request, "logbook saved successfully")
+            return redirect('teaching_report', request.POST['workload_id'])
+
+
+@login_required(login_url='/')
+def logbook_history(request, workload_id):
+    logbooks = TeachingLogbook.objects.filter(workload__id=workload_id)
+    context = {
+        'logbooks': logbooks
+    }
+    return render(request, 'pages/logbooks.html', context)
