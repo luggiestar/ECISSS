@@ -1,4 +1,5 @@
 import openpyxl
+from BeemAfrica import Authorize, SMS
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
@@ -61,16 +62,18 @@ def upload_staff_entry(request):
 
         for rowno, rowval in enumerate(worksheet.iter_rows(min_row=1, max_row=worksheet.max_row - 1), start=2):
 
-            get_username = f"{worksheet.cell(row=rowno, column=1).value}.{worksheet.cell(row=rowno, column=2).value}"
             get_phone = f"0{worksheet.cell(row=rowno, column=5).value}"
             get_role = Role.objects.filter(name='teacher').first()
 
             try:
                 get_staff = get_object_or_404(Staff, user=request.user)
+                first_name = worksheet.cell(row=rowno, column=1).value
+                last_name = worksheet.cell(row=rowno, column=2).value
+                get_username = f"{first_name.lower()}.{last_name.lower()}"
                 save_user = User(
                     username=get_username,
-                    first_name=worksheet.cell(row=rowno, column=1).value,
-                    last_name=worksheet.cell(row=rowno, column=2).value,
+                    first_name=first_name.lower(),
+                    last_name=last_name.lower(),
                     sex=worksheet.cell(row=rowno, column=4).value,
                     email=worksheet.cell(row=rowno, column=3).value,
                     phone=get_phone,
@@ -91,7 +94,10 @@ def upload_staff_entry(request):
                     messages.success(request, f"Staff template uploaded successfully")
                 else:
                     messages.success(request, f"User template uploaded successfully")
+
             except:
                 messages.error(request, f"Sometimes went wrong")
 
         return redirect('staff_list')
+
+

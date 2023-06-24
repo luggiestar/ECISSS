@@ -186,7 +186,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-
+                                    <b>{{request.user.first_name}} {{request.user.last_name}}</b> - ({{staff_status}})
                                 </span>
                                 {% if request.user.sex == 'M' %}
                                     <img class="img-profile rounded-circle" src="{% static 'avator/man.jfif' %}">
