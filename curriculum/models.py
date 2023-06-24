@@ -283,6 +283,24 @@ class TeachingCalendar(models.Model):
         return f"{self.topic} {self.academic_term}"
 
 
+class TeachingProgressSummary(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=False, related_name="subject_progress")
+    level = models.ForeignKey(Level, on_delete=models.CASCADE, null=False, related_name="shool_level_progress")
+    school = models.ForeignKey(School, on_delete=models.CASCADE, null=False, related_name="school_progress")
+    academic_year = models.ForeignKey(AcademicYear, on_delete=models.CASCADE, null=False,
+                                      related_name="school_progress_year")
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+
+    class Meta:
+        db_table = "teaching_progress_summary"
+        verbose_name = "Teaching Progress_summary"
+        verbose_name_plural = "Teaching Progress Summary"
+        unique_together = ['subject', 'level', 'school', 'academic_year']
+
+    def __str__(self):
+        return f"{self.subject} {self.academic_year}"
+
+
 class Workload(models.Model):
     teacher = models.ForeignKey(Staff, on_delete=models.CASCADE, null=False, related_name="workload_teacher")
     academic_year = models.ForeignKey(AcademicYear, on_delete=models.CASCADE, null=False, related_name="workload_acy")

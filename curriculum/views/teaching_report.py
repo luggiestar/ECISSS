@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from ..models import TeachingCalendar, Workload, TeachingReport, Staff
 from ..forms import TeachingReportForm
 import datetime
+from ..decoretor import *
+
 
 
 @login_required(login_url='/')
@@ -65,9 +67,9 @@ def teaching_report_history(request):
     role = get_staff.role.name
 
     if request.user.is_superuser or role == "academic master" or role == "head master":
-        get_reports = TeachingReport.objects.all()
+        get_reports = TeachingReport.objects.filter(workload__teacher__school=get_staff.school)
 
-    elif role == "teacher":
+    else:
         get_reports = TeachingReport.objects.filter(workload__teacher__user=request.user)
 
     context = {
@@ -83,8 +85,10 @@ def verify_report(request, report_id):
     if request.method == "POST":
         report_id = request.POST['report_id']
         get_verifier = Staff.objects.filter(user=request.user).first()
-        TeachingReport.objects.filter(is_verified=False, id=report_id).update(is_verified=True, verifier=get_verifier)
-
+        update_report = TeachingReport.objects.filter(is_verified=False, id=report_id).first()
+        update_report.is_verified = True
+        update_report.verifier = get_verifier
+        update_report.save()
         messages.success(request, "Report Verified successfully")
         return redirect('verify')
 
